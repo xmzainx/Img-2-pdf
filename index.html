@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image to PDF - Free Tool</title>
+<link rel="manifest" href="manifest.json">
+<style>
+body{font-family:Arial;text-align:center;padding:20px;background:#f5f5f5}
+.box{background:white;padding:20px;border-radius:15px;max-width:500px;margin:auto;box-shadow:0 0 10px #ccc}
+button{background:#000;color:#fff;padding:12px 20px;border:none;border-radius:8px;font-size:16px;margin-top:10px;width:100%}
+img{width:100px;height:100px;object-fit:cover;margin:5px;border-radius:8px}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>Image to PDF Maker</h2>
+<p>Apni tasveeren chuno, phir PDF banao</p>
+<input type="file" id="input" accept="image/*" multiple>
+<div id="preview"></div>
+<button onclick="makePDF()">PDF Download Karo</button>
+<p style="font-size:12px;color:gray">Bilkul Free - Koi Watermark Nahi</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+let images=[];
+document.getElementById('input').addEventListener('change',function(e){
+  images=[];
+  document.getElementById('preview').innerHTML='';
+  for(let file of e.target.files){
+    let reader=new FileReader();
+    reader.onload=function(ev){
+      images.push(ev.target.result);
+      let im=document.createElement('img');
+      im.src=ev.target.result;
+      document.getElementById('preview').appendChild(im);
+    }
+    reader.readAsDataURL(file);
+  }
+});
+async function makePDF(){
+  if(images.length==0){alert('Pehle image chuno bhai!');return;}
+  const {jsPDF}=window.jspdf;
+  const pdf=new jsPDF();
+  for(let i=0;i<images.length;i++){
+    if(i>0) pdf.addPage();
+    pdf.addImage(images[i],'JPEG',10,10,190,270);
+  }
+  pdf.save('my-pdf.pdf');
+}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}
+</script>
+</body>
+</html>

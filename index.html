@@ -78,5 +78,25 @@ function move(i,dir){let j=i+dir;if(j<0||j>=images.length)return;[images[i],imag
 function removeImg(i){images.splice(i,1);render();}
 async function makePDF(){if(!images.length){alert('Please upload images first');return;}const {jsPDF}=window.jspdf;const size=document.getElementById('size').value;const orient=document.getElementById('orient').value;let pdf=new jsPDF({orientation:orient,unit:'mm',format:size==='fit'?[210,297]:size});for(let i=0;i<images.length;i++){if(i>0)pdf.addPage(size==='fit'?[210,297]:size,orient);if(size==='fit'){pdf.addImage(images[i],'JPEG',0,0,210,297);}else{pdf.addImage(images[i],'JPEG',10,10,190,277);}}pdf.save('Img2PDF-'+Date.now()+'.pdf');}
 </script>
+<!-- Cookie Banner -->
+<style>
+#cookieBox{position:fixed;bottom:12px;left:12px;right:12px;background:#0F172A;color:#fff;padding:14px;border-radius:14px;z-index:9999;display:none;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+#cookieBox p{font-size:13px;line-height:1.5;margin-bottom:10px}
+#cookieBox a{color:#A5B4FC}
+#cookieBox button{border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer;margin-right:8px}
+#acceptBtn{background:#4F46E5;color:#fff}
+#declineBtn{background:#334155;color:#fff}
+@media(min-width:600px){#cookieBox{left:auto;right:16px;bottom:16px;max-width:380px}}
+</style>
+<div id="cookieBox">
+<p>🍪 We use cookies to improve your experience and to show relevant ads. By clicking Accept, you agree to our <a href="privacy.html">Privacy Policy</a>.</p>
+<button id="acceptBtn" onclick="setCookie(true)">Accept All</button>
+<button id="declineBtn" onclick="setCookie(false)">Decline</button>
+</div>
+<script>
+function setCookie(v){localStorage.setItem('cookieChoice',v?'accepted':'declined');document.getElementById('cookieBox').style.display='none';}
+if(!localStorage.getItem('cookieChoice')){document.getElementById('cookieBox').style.display='block';}
+</script>
+  
 </body>
 </html>

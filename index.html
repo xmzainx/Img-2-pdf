@@ -1,53 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Image to PDF - Free Tool</title>
+<title>Image to PDF Converter - Free, Fast & Secure | Img2PDF</title>
+<meta name="description" content="Convert JPG, PNG, WEBP images to PDF online for free. No signup, no watermark, 100% secure. Your files never leave your device.">
 <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4F46E5">
 <style>
-body{font-family:Arial;text-align:center;padding:20px;background:#f5f5f5}
-.box{background:white;padding:20px;border-radius:15px;max-width:500px;margin:auto;box-shadow:0 0 10px #ccc}
-button{background:#000;color:#fff;padding:12px 20px;border:none;border-radius:8px;font-size:16px;margin-top:10px;width:100%}
-img{width:100px;height:100px;object-fit:cover;margin:5px;border-radius:8px}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,Arial,sans-serif}
+body{background:#F8FAFC;color:#0F172A}
+header{background:#fff;border-bottom:1px solid #E2E8F0;position:sticky;top:0;z-index:10}
+.nav{max-width:1000px;margin:auto;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;font-size:22px;color:#4F46E5}.logo span{color:#0F172A}
+.nav a{font-size:13px;color:#475569;text-decoration:none;margin-left:14px;font-weight:600}
+.hero{max-width:1000px;margin:auto;padding:32px 16px 16px;text-align:center}
+.hero h1{font-size:34px;line-height:1.15}.hero h1 span{color:#4F46E5}
+.hero p{color:#64748B;margin:14px auto;max-width:600px;line-height:1.6}
+.badge{display:inline-block;background:#EEF2FF;color:#4F46E5;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700}
+.card{max-width:800px;margin:16px auto;background:#fff;border:1px solid #E2E8F0;border-radius:20px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.05)}
+.drop{border:2px dashed #C7D2FE;background:#EEF2FF;border-radius:16px;padding:28px;text-align:center;cursor:pointer}
+.drop b{color:#4F46E5}
+input[type=file]{display:none}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.controls select,.controls button{flex:1;padding:12px;border-radius:10px;border:1px solid #E2E8F0;font-weight:600}
+.btn{background:#4F46E5;color:#fff;border:none;width:100%;padding:15px;border-radius:12px;font-size:16px;font-weight:700;margin-top:14px;cursor:pointer}
+.btn:disabled{opacity:.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-top:14px}
+.item{position:relative;border:1px solid #E2E8F0;border-radius:12px;overflow:hidden;background:#fff}
+.item img{width:100%;height:110px;object-fit:cover;display:block}
+.item div{display:flex;justify-content:space-between;padding:6px}
+.item button{border:none;background:#F1F5F9;padding:5px 8px;border-radius:6px;cursor:pointer}
+.features{max-width:1000px;margin:20px auto;padding:0 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.f{background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:16px}.f h3{font-size:16px;margin-bottom:6px}.f p{font-size:13px;color:#64748B;line-height:1.5}
+.section{max-width:800px;margin:20px auto;padding:0 16px}.section h2{font-size:20px;margin-bottom:10px}.section p,.section li{font-size:14px;color:#475569;line-height:1.7}
+footer{text-align:center;padding:20px;color:#94A3B8;font-size:12px}
 </style>
 </head>
 <body>
-<div class="box">
-<h2>Image to PDF Maker</h2>
-<p>Apni tasveeren chuno, phir PDF banao</p>
-<input type="file" id="input" accept="image/*" multiple>
-<div id="preview"></div>
-<button onclick="makePDF()">PDF Download Karo</button>
-<p style="font-size:12px;color:gray">Bilkul Free - Koi Watermark Nahi</p>
+<header><div class="nav"><div class="logo">Img<span>2PDF</span></div><div><a href="#">Home</a><a href="#how">How to Use</a><a href="#faq">FAQ</a></div></div></header>
+<div class="hero">
+<span class="badge">★ 100% FREE • NO SIGN-UP • NO WATERMARK</span>
+<h1>Convert Images to PDF<br><span>in Seconds</span></h1>
+<p>Turn your JPG, PNG and WEBP images into a professional PDF. Fast, secure and completely free. Your files are processed in your browser and never uploaded to our server.</p>
 </div>
-
+<div class="card">
+<label class="drop" for="input"><b>+ Click to Upload Images</b><br><small>or drag & drop • JPG, PNG, WEBP • Multiple files supported</small></label>
+<input type="file" id="input" accept="image/*" multiple>
+<div class="controls">
+<select id="size"><option value="a4">Page Size: A4</option><option value="letter">Page Size: Letter</option><option value="fit">Page Size: Same as Image</option></select>
+<select id="orient"><option value="p">Orientation: Portrait</option><option value="l">Orientation: Landscape</option></select>
+</div>
+<div class="grid" id="preview"></div>
+<button class="btn" id="dlBtn" onclick="makePDF()" disabled>Download PDF</button>
+<p style="text-align:center;font-size:12px;color:#94A3B8;margin-top:10px">🔒 Private & Secure - Files never leave your device</p>
+</div>
+<div class="features">
+<div class="f"><h3>⚡ Lightning Fast</h3><p>No waiting, no upload. PDF is created instantly in your browser.</p></div>
+<div class="f"><h3>🔒 100% Private</h3><p>We never see your images. Everything happens on your device.</p></div>
+<div class="f"><h3>📱 Works Everywhere</h3><p>Works on Mobile, Tablet, Laptop and Desktop. No app needed.</p></div>
+<div class="f"><h3>✨ High Quality</h3><p>Original image quality preserved. Perfect for documents & photos.</p></div>
+</div>
+<div class="section" id="how"><h2>How to Convert Image to PDF?</h2><ol><li><b>Upload:</b> Click above and select your images.</li><li><b>Arrange:</b> Use ↑ ↓ to reorder pages.</li><li><b>Choose:</b> Select A4 / Letter size and Portrait / Landscape.</li><li><b>Download:</b> Click Download PDF and save it.</li></ol></div>
+<div class="section" id="faq"><h2>Frequently Asked Questions</h2><p><b>Is it really free?</b><br>Yes, 100% free with no limit and no watermark.</p><br><p><b>Are my images safe?</b><br>Yes. Your images are never uploaded to any server.</p><br><p><b>Can I use it on mobile?</b><br>Yes, it works perfectly on Android and iPhone.</p></div>
+<footer>© 2026 Img2PDF - Free Online Tools • Privacy Policy • Terms • Contact</footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 let images=[];
-document.getElementById('input').addEventListener('change',function(e){
-  images=[];
-  document.getElementById('preview').innerHTML='';
-  for(let file of e.target.files){
-    let reader=new FileReader();
-    reader.onload=function(ev){
-      images.push(ev.target.result);
-      let im=document.createElement('img');
-      im.src=ev.target.result;
-      document.getElementById('preview').appendChild(im);
-    }
-    reader.readAsDataURL(file);
+const input=document.getElementById('input');
+const preview=document.getElementById('preview');
+const dlBtn=document.getElementById('dlBtn');
+input.addEventListener('change',e=>handleFiles(e.target.files));
+function handleFiles(files){
+  for(let file of files){
+    let r=new FileReader();
+    r.onload=ev=>{images.push(ev.target.result);render();};
+    r.readAsDataURL(file);
   }
-});
+}
+function render(){
+  preview.innerHTML='';
+  images.forEach((src,i)=>{
+    let d=document.createElement('div');d.className='item';
+    d.innerHTML=`<img src="${src}"><div><button onclick="move(${i},-1)">↑</button><span>${i+1}</span><button onclick="move(${i},1)">↓</button><button onclick="removeImg(${i})">✕</button></div>`;
+    preview.appendChild(d);
+  });
+  dlBtn.disabled=images.length===0;
+  dlBtn.textContent=images.length?`Download PDF (${images.length} Pages)`:'Download PDF';
+}
+function move(i,dir){let j=i+dir;if(j<0||j>=images.length)return;[images[i],images[j]]=[images[j],images[i]];render();}
+function removeImg(i){images.splice(i,1);render();}
 async function makePDF(){
-  if(images.length==0){alert('Pehle image chuno bhai!');return;}
+  if(!images.length){alert('Please upload images first');return;}
   const {jsPDF}=window.jspdf;
-  const pdf=new jsPDF();
+  const size=document.getElementById('size').value;
+  const orient=document.getElementById('orient').value;
+  let pdf=new jsPDF({orientation:orient,unit:'mm',format:size==='fit'?[210,297]:size});
   for(let i=0;i<images.length;i++){
-    if(i>0) pdf.addPage();
-    pdf.addImage(images[i],'JPEG',10,10,190,270);
+    if(i>0) pdf.addPage(size==='fit'?[210,297]:size,orient);
+    if(size==='fit'){pdf.addImage(images[i],'JPEG',0,0,210,297);}
+    else {pdf.addImage(images[i],'JPEG',10,10,190,277);}
   }
-  pdf.save('my-pdf.pdf');
+  pdf.save('Img2PDF-'+Date.now()+'.pdf');
 }
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}
 </script>
